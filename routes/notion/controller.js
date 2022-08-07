@@ -33,10 +33,18 @@ const getVinyls = async (req, res) => {
   return res.status(200).send(datab);
 };
 
-const addVinylToNotion = async (req, res) => {};
+const addVinylToNotion = async (req, res) => {
+  const vinyl = req.body;
+  const vinylId = await axios.post(
+    `${config.notion.url}/api/v1/notion/vinyls`,
+    vinyl
+  );
+  const vinylIdData = await vinylId.data;
+  res.status(200).send(vinylIdData);
+  return vinylIdData;
+};
 
 const getVinylFromNotion = async (req, res) => {
-  console.log(`🐛 🐞 req ➡ ${JSON.stringify(req.body.status, null, 2)} 🐞 🐛 `);
   const wantlistFromNotion = await axios.get(
     `${config.notion.url}/api/v1/notion/vinyls?status=${req.body.status}`
   );

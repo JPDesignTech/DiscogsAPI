@@ -6,7 +6,7 @@ const router = express.Router();
 const verify = require("../../modules/verify");
 const controller = require("./controller");
 
-router.get("/wants", controller.getVinylFromNotion);
-router.post("/wants", controller.addVinylToNotion);
+router.get("/list", controller.getVinylFromNotion);
+router.post("/list", controller.addVinylToNotion);
 
 module.exports = router;

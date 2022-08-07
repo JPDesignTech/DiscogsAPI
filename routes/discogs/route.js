@@ -7,8 +7,8 @@ const verify = require("../../modules/verify");
 const controller = require("./controller");
 
 router.get("/wantlist", controller.getVinylWantList);
-router.get("/wantlist/check", controller.checkVinyls);
-router.get("/collection", controller.getVinylWantList);
+router.get("/check", controller.checkVinyls);
+router.get("/collection", controller.getVinylCollection);
 
 router.post("/discogs", controller.addVinylToWantList);
 
