@@ -12,9 +12,13 @@ const getVinyls = async (req, res) => {
   return res.status(200).send(datab);
 };
 
-const addVinyl = async (req, res) => {};
+const addVinylToNotion = async (req, res) => {};
+
+const getVinylFromNotion = async (req, res) => {
+  return res.status(200).send("getVinylFromNotion");
+};
 
 module.exports = {
-  getVinyls,
-  addVinyl,
+  addVinylToNotion,
+  getVinylFromNotion,
 };

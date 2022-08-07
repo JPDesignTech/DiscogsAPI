@@ -24,6 +24,7 @@
   "dependencies": {
     "@google-cloud/firestore": "^4.1.1",
     "@google-cloud/logging-winston": "^4.1.1",
+    "axios": "^0.27.2",
     "body-parser": "^1.19.0",
     "command-promise": "^2.0.1",
     "del": "^6.0.0",
