@@ -46,11 +46,26 @@ const checkVinyls = async (req, res) => {
         `https://api.discogs.com/users/jeanp3/wants?token=${discogsToken}`
       );
     } else {
-      listRequest = await axios.get(
-        `https://api.discogs.com/users/jeanp3/collection/folders/0/releases?token=${discogsToken}`
-      );
+      if (status === "Preordered" || status === "Owned") {
+        const discogsFolders = await axios.get(
+          `https://api.discogs.com/users/jeanp3/collection/folders?token=${discogsToken}`
+        );
+
+        // Get the folder that relates to the status passed through the request
+        let folderID = discogsFolders.data.folders.filter(
+          (folder) => folder.name === status
+        )[0].id;
+
+        listRequest = await axios.get(
+          `https://api.discogs.com/users/jeanp3/collection/folders/${folderID}/releases?token=${discogsToken}`
+        );
+      } else {
+        listRequest = await axios.get(
+          `https://api.discogs.com/users/jeanp3/collection/folders/0/releases?token=${discogsToken}`
+        );
+      }
     }
-    // Compare Discogs WantList from Notion Vinyl Collection with Status 'Wanted'.
+    // Compare Discogs Folder or Wantlist to Notion Vinyl Collection with the same Status.
     // If there is a diff, add the new vinyl to the Notion Vinyl Collection.
     // If there is no diff, do nothing.
     const notionVinylCollection = await axios.get(
@@ -101,7 +116,9 @@ const checkVinyls = async (req, res) => {
       );
 
       if (!isInNotion) {
-        return setTimeout(addVinylToNotion(vinylData), 2000);
+        return setTimeout(() => {
+          addVinylToNotion(vinylData);
+        }, 2000);
       } else {
         return;
       }
